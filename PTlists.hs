@@ -1,50 +1,49 @@
 module PTlists where
 
-{-
-  Examples that make use of lists, ranges, list comprehensions. Some Haskell
-  functions that might be useful: head, tail, init, last, length, null, reverse,
-  take, drop, minimum, maximum, sum, product, elem, cycle, repeat, fst, snd.
--}
+{-Examples that make use of lists, ranges, list comprehensions. Some Haskell
+functions that might be useful: head, tail, init, last, length, null, reverse,
+take, drop, minimum, maximum, sum, product, elem, cycle, repeat, fst, snd.-}
 
-{- 
-  Create a function called allLowerCaseLetters that returns a list of characters
-  from 'a' to 'z'. Do not use the string: "abcdefghijklmnopqrstuvwxyz" in your
-  function!
--}
+{- Create a function called allLowerCaseLetters that returns a list of characters
+from 'a' to 'z'. Do not use the string: "abcdefghijklmnopqrstuvwxyz" in your
+function!-}
 
-allLowerCaseLetters = -- put your code here
+allLowerCaseLetters = ['a'..'z']
 
-{- 
-  Create a function called allIntegersInclusive that accepts two integer values,
-  a and b, and returns a list of all integers from a to b, inclusive. If b<a then
-  the list must be in descending order. For example:
+
+{- Create a function called allIntegersInclusive that accepts two integer values,
+a and b, and returns a list of all integers from a to b, inclusive. If b<a then
+the list must be in descending order. For example:
   
   Prelude> allIntegersInclusive 3 7
   [3,4,5,6,7]
   Prelude> allIntegersInclusive 7 3
-  [7,6,5,4,3]
--}
+  [7,6,5,4,3] -}
 
-allIntegersInclusive a b = -- put your code here
+allIntegersInclusive a b = if a< b
+                        then [a..b]
+                           else [a,a-1..b]
+                           
 
-{-
-  Create a function called allIntegersExcludingFirst that accepts two integer
-  values, a and b, and returns a list of all integers from a to b, exclusive of 
-  a and inclusive of b. If b<a then the list must be in descending order.
+{-Create a function called allIntegersExcludingFirst that accepts two integer
+values, a and b, and returns a list of all integers from a to b, exclusive of 
+a and inclusive of b. If b<a then the list must be in descending order.
   For example:
   
   Prelude> allIntegersExcludingFirst 6 2
   [5,4,3,2]
 -}
 
-allIntegersExcludingFirst a b = -- put your code here
+allIntegersExcludingFirst a b = if a< b
+                            then tail [a..b]
+                                else tail [a,a-1..b]
 
 {- 
   Create a function called allThousands that returns a list of integers beginning
   with 1000 and ending with 9999.
 -}
 
-allThousands = -- put your code here
+allThousands = [1000 .. 9999]
 
 {-
   Create a function called integersUpDownUp that accepts four integer values,
@@ -58,7 +57,7 @@ allThousands = -- put your code here
   [6,5,4,3,2,3,4,5,6,7,8,9,10]
 -}
 
-integersUpDownUp a b c d = -- put your code here
+integersUpDownUp a b c d = allIntegersInclusive a b ++ allIntegersExcludingFirst b c ++ allIntegersExcludingFirst c d
 
 {-
   Create a function called isDivisor that accepts two integers n and d and
@@ -71,7 +70,7 @@ integersUpDownUp a b c d = -- put your code here
   False
 -}
 
-isDivisor n d = -- put your code here
+isDivisor n d = n `mod` d == 0
 
 {- 
   Create a function called divisors that accepts an integer, n, and returns
@@ -83,29 +82,25 @@ isDivisor n d = -- put your code here
   Hint: use a list comprehension.
 -}
 
-divisors n = -- put your code here
+divisors n = [x | x <- [1..n-1], isDivisor n x ]
 
-{-
-  Create a function called isPerfect that accepts an integer, n, and returns 
-  True/False depending on whether the number is "perfect". A perfect number 
-  is one in which the sum of its divisors equals the number itself. 
-  For example, the number 6 (sum of divisors, 1, 2, 3 is 6):
+{-Create a function called isPerfect that accepts an integer, n, and returns 
+True/False depending on whether the number is "perfect". A perfect number 
+is one in which the sum of its divisors equals the number itself. 
+For example, the number 6 (sum of divisors, 1, 2, 3 is 6):
   
   Prelude> isPerfect 6
-  True
--}
+  True-}
+isPerfect n = n == sum (divisors n)
 
-isPerfect n = -- put your code here
-
-{-
-  Create a function called allPerfects that accepts an integer, n, and returns
+{-Create a function called allPerfects that accepts an integer, n, and returns
   a list of all perfect numbers between 1 and n (inclusive). For example:
   
   Prelude> allPerfects 30
   [6,28]
 -}
 
-allPerfects n = -- put your code here
+allPerfects n = [x | x <- [1..n], isPerfect x ]
 
 {-
   Create a function called isRigid that accepts an integer, n, and returns
@@ -129,7 +124,9 @@ allPerfects n = -- put your code here
   of the problem.
 -}
 
-isRigid n = -- put your code here
+stringlist n = [[c] | c <- show  n]
+numConverter n = [(read :: String -> Int) s | s <- stringlist n]
+isRigid n = sum(numConverter n) == product(numConverter n)
 
 {-
   Create a function called allRigids that accepts an integer, n, and returns
@@ -139,7 +136,7 @@ isRigid n = -- put your code here
   [1,2,3,4,5,6,7,8,9,22,123,132,213,231,312,321]
 -}
 
-allRigids n = -- put your code here
+allRigids n = [x | x <- [1..n], isRigid x ]
 
 {-
   Create a function called fizzBuzz that accepts integers n, f, and b. 
@@ -152,5 +149,7 @@ allRigids n = -- put your code here
   ["1","Fizz","Buzz","4","5","FizzBuzz","7","Fizz","Buzz","10"]
 -}
 
-fizzBuzz n f b = -- put your code here
+numList n = [x | x <- [1..n]]
+numTostring n = (show (numList n ) )
+fizzBuzz n f b = [if n`mod`(f*b)== 0 then "FizzBuzz!" else if n `mod`(f) == 0 then "Fizz!" else "Buzz!" | n <- [1..n], f <- [f], b <- [b]]
 
