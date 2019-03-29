@@ -147,9 +147,19 @@ allRigids n = [x | x <- [1..n], isRigid x ]
   
   Prelude> fizzBuzz 10 2 3
   ["1","Fizz","Buzz","4","5","FizzBuzz","7","Fizz","Buzz","10"]
+  
+  also test fizzBuzz 20 3 9
 -}
 
 numList n = [x | x <- [1..n]]
 numTostring n = (show (numList n ) )
-fizzBuzz n f b = [if n`mod`(f*b)== 0 then "FizzBuzz!" else if n `mod`(f) == 0 then "Fizz!" else "Buzz!" | n <- [1..n], f <- [f], b <- [b]]
+fizzBuzz n f b = [if n`mod` (f)== 0 && n`mod` (b)== 0
+                    then "FizzBuzz!" 
+                    else if n `mod`(f) == 0 
+                            then "Fizz!" 
+                            else if n `mod`(b) == 0  
+                              then "Buzz!" 
+                              else show n   | n <- [1..n]]
+
+--fizzBuzz n f b = [if n`mod`(f*b)== 0 then "FizzBuzz!" else if n `mod`(f) == 0 then "Fizz!" else "Buzz!" | n <- [1..n], f <- [f], b <- [b]]
 

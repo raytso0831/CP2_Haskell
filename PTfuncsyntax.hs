@@ -162,9 +162,11 @@ numListToNum l = last l + (numListToNum (init l)) * 10
   *PTfuncsyntax> wordsToPhone "Good Morning, Vietnam"
   466366764648438626
 -}
+
+filterfunc c = elem c (['A'..'Z'] ++ ['a'..'z'])
+
 wordsToPhone :: String -> Int
-letterConvertToNum w = numListToNum (charToPhoneDigit w)
-wordsToPhone w = [ charToPhoneDigit | x<- charToPhoneDigit w] 
+wordsToPhone w = numListToNum [ charToPhoneDigit x | x<- (filter filterfunc w)] 
 
 
 
